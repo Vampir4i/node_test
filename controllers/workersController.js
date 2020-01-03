@@ -1,16 +1,30 @@
 const Worker = require("./../models/worker");
 
 exports.getWorkers = function (req, res) {
-    Worker.find({}, function(err, users){
-
-        if(err) return console.log(err);
-        res.send(users)
+    // Worker.find({}, function(err, users){
+    //
+    //     if(err) return console.log(err);
+    //     res.send(users)
+    // });
+    //{ page: +req.query.page, limit: +req.query.count }
+    let page = +req.query.page;
+    let count = +req.query.count;
+    console.log(page + typeof page);
+    console.log(count + typeof count);
+    Worker.paginate({}, { page: page, limit: count }, (error, result) => {
+        if (error) {
+            console.error(error);
+        } else {
+            //console.log('Pages:', pageCount);
+            console.log(result.docs);
+            console.log(result.total);
+            res.send({workers: [...result.docs], countWorkers: result.total});
+        }
     });
 }
 
 exports.addWorker = function(req, res){
     if(!req.body) return res.sendStatus(400);
-    console.log(req);
 
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;

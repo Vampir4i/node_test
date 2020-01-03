@@ -3,8 +3,8 @@ const User = require("./../models/user");
 exports.loginUser = function(req, res) {
     if(!req.body) return res.sendStatus(400);
 
-    const login = req.query.login;
-    const password = req.query.password;
+    const login = req.body.login;
+    const password = req.body.password;
 
     User.findOne({login, password}, function(err, users){
 
@@ -16,9 +16,9 @@ exports.loginUser = function(req, res) {
 exports.registerUser = function(req, res) {
     if(!req.body) return res.sendStatus(400);
 
-    const login = req.query.login;
-    const password = req.query.password;
-    const email = req.query.email;
+    const login = req.body.login;
+    const password = req.body.password;
+    const email = req.body.email;
 
     const user = new User({login, password, email});
 
