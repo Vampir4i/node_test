@@ -53,8 +53,8 @@ const Mutation = new GraphQLObjectType({
                 position: { type: GraphQLString }
             },
             resolve(parent, {firstName, lastName, age, gender, info, data, salary, position}){
-                const worker =  {firstName, lastName, age, gender, info, data, salary, position};
-                const worker = new Worker(worker);
+                const workerObj =  {firstName, lastName, age, gender, info, data, salary, position};
+                const worker = new Worker(workerObj);
 
                 return worker.save();
             }
